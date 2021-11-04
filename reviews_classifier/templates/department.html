@@ -1,0 +1,36 @@
+{% extends "table_pages.html" %}
+{% block title %}DepartmentCRUD{% endblock %}
+
+{% block content %}
+    <div class="d-flex flex-row justify-content-center" id="all_content">
+        <!-- Place for table with employees -->
+        <div class="p-2">
+            <h5 class="card-title" id="form_title">Create a copy of the department</h5>
+            <form id="insert_form">
+            <div class="form-group row">
+                <label for="department_name" class="col-4 col-form-label">Department name</label>
+                <div class="col-8">
+                    <input id="department_name" name="department_name" placeholder="department name" type="text" required="required" class="form-control">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="offset-4 col-8">
+                    <input id="employee_id" name="department_id" hidden type="text" class="form-control" value="{{ department_id }}">
+                    <button id="insert_btn" class="btn btn-outline-success" type="submit">Submit</button>
+                </div>
+            </div>
+            </form>
+            <button id="delete_button" class="btn btn-outline-danger">Delete department</button>
+            <button id="update_button" class="btn btn-outline-warning">Change department info</button>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block datatable_script %}
+    <script type="text/javascript">
+        let department_id = "{{ department_id }}"
+        let department_address = "{{ url_for('routes.departments') }}"
+    </script>
+    <script src="{{ url_for('routes.static', filename='department.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,4 @@
+.env
+venv
+reviews_classifier.egg-info
+.idea

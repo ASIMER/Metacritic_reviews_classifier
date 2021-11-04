@@ -1,0 +1,7 @@
+flask
+python-dotenv
+pytest
+setuptools
+gunicorn
+flask-restful
+-e .
