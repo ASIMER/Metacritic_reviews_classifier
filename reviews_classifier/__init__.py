@@ -12,7 +12,7 @@ def create_app():
     app.config.from_object(Config())
     #app.wsgi_app = Middleware(app.wsgi_app)
     api = Api(app)
-    api.register_blueprint(classifier,
+    app.register_blueprint(classifier,
                            static_folder='static',
                            static_url_path='/static')
     api.add_resource(DetectLang, "/detect_lang")

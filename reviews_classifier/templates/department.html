@@ -1,4 +1,4 @@
-{% extends "table_pages.html" %}
+{% extends "guest_pages.html" %}
 {% block title %}DepartmentCRUD{% endblock %}
 
 {% block content %}
@@ -30,7 +30,7 @@
 {% block datatable_script %}
     <script type="text/javascript">
         let department_id = "{{ department_id }}"
-        let department_address = "{{ url_for('routes.departments') }}"
+        let department_address = "{{ url_for('classifier.main') }}"
     </script>
-    <script src="{{ url_for('routes.static', filename='department.js') }}"></script>
+    <script src="{{ url_for('classifier.static', filename='department.js') }}"></script>
 {% endblock %}

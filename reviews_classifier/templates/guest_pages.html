@@ -26,15 +26,14 @@
     {% block navbar %}
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="/">EPAM Python winter 2021 project</a>
+                <a class="navbar-brand" href="/">Metacritic review classifier</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav">
-                        <a class="nav-link" id="nav_home" aria-current="page" href="/">Home</a>
-                        <a class="nav-link" id="nav_dep" href="{{ url_for("routes.departments") }}">Departments</a>
-                        <a class="nav-link" id="nav_emp" href="{{ url_for("routes.employees") }}">Employees</a>
+                        <a class="nav-link" id="nav_classify" aria-current="page" href="/">Classify</a>
+                        <a class="nav-link" id="nav_info" href="{{ url_for("classifier.info") }}">Info</a>
                     </div>
                 </div>
             </div>
@@ -61,7 +60,7 @@
     });
 </script>
 {% endblock %}
-{% block datatable_script %}
+{% block classifier_script %}
 {% endblock %}
 </body>
 </html>

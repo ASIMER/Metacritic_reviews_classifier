@@ -1,10 +1,23 @@
-{% extends "table_pages.html" %}
-{% block title %}Main page{% endblock %}
+{% extends "guest_pages.html" %}
+{% block title %}Classify page{% endblock %}
 
 {% block content %}
-<div class="d-flex flex-row justify-content-center">
-    <!-- Place for table with employees -->
-    <div class="p-2">Card 1</div>
-    <div class="p-2">Card 2</div>
-</div>
+    <form>
+        <div class="form-row col-sm-4 offset-sm-4 align-items-center">
+            <div class="text-center">
+                <label class="sr-only" for="inlineFormInput">Review text</label>
+                <textarea type="text"
+                          class="form-control mb-2"
+                          id="inlineFormInput"
+                          placeholder="Type review here"></textarea>
+            </div>
+
+            <div class="text-center my-1 mr-sm-2">
+                <label class="custom-control-label" for="customControlInline">Detected language: <b>English</b></label>
+            </div>
+
+            <button type="submit" class="btn btn-info my-1">Predicted score: None</button>
+            <button type="submit" class="btn btn-primary my-1">Submit</button>
+        </div>
+    </form>
 {% endblock %}
