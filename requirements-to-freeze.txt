@@ -8,6 +8,7 @@ setuptools
 gunicorn
 flask-restful
 tensorflow==2.6.0
+keras==2.6.0
 transformers
 numpy
 -e .
