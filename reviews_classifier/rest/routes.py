@@ -26,5 +26,5 @@ class Predict(Resource):
         if not response:
             return {'message': "Request empty"}, 200
 
-        score = predict(response['text'])
-        return {'Score': score}, 200
+        vector = predict(response['text'])
+        return {'vector': vector}, 200

@@ -1,11 +1,10 @@
 from time import time
 
-from reviews_classifier.service import bert_model, bert_tokenizer, \
-    classifier_model
+from reviews_classifier.service import bert_model, bert_tokenizer
 from reviews_classifier.service.bert import vectorize
 from reviews_classifier.service.text_filtering import preprocess
 import numpy as np
-import logging
+
 from flask import current_app as app
 
 
@@ -75,7 +74,7 @@ def predict(text) -> float:
     :param text: text from user
     :return: predicted score
     """
-    score = 'Error'
+    vector = 'Error'
     app.logger.info('Start text preprocessing')
     start_time = time()
     text = preprocess(text)
@@ -83,20 +82,12 @@ def predict(text) -> float:
 
     start_time = time()
     app.logger.info('Start vectorizing text with BERT')
-    vector = vectorize(text,
-                       bert_model=bert_model,
-                       bert_tokenizer=bert_tokenizer)
+    try:
+        vector = vectorize(text,
+                           bert_model=bert_model,
+                           bert_tokenizer=bert_tokenizer)
+    except:
+        vector = 'Error'
     app.logger.info(f'Text vectorized, spend time: {time() - start_time}')
 
-    g = generator([vector], predict_mode=True)
-
-    start_time = time()
-    app.logger.info('Start predicting text scrore')
-    try:
-        score = classifier_model.predict(g, steps=1)
-        # convert np.array to score
-        score = round(float(score[0][0]), 3)
-    except:
-        print('Error')
-    app.logger.info(f'Text score predicted, spend time: {time() - start_time}')
-    return score
+    return vector
