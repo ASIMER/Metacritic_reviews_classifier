@@ -8,7 +8,8 @@ def main():
     """
     Route for welcome page, it's like menu for further interactions
     """
-    return render_template("main.html")
+    import os
+    return render_template("main.html", m_path=os.getcwd())
 
 
 @classifier.route('/info')

@@ -1,1 +1,1 @@
-web: gunicorn "wsgi:create_app()" --log-file -
+web: gunicorn "wsgi:create_app()" --timeout 900 --log-file -

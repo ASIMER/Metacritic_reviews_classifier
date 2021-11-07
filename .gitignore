@@ -2,3 +2,9 @@
 venv
 reviews_classifier.egg-info
 .idea
+venv_linux
+venv_linux2
+.ipynb_checkpoints
+reviews_classifier/service/.ipynb_checkpoints
+Untitled1.ipynb
+requirements_new.txt

@@ -2,6 +2,7 @@
 {% block title %}Classify page{% endblock %}
 
 {% block content %}
+    <b>Model path: {{ m_path }}</b>
     <form>
         <div class="form-row col-sm-4 offset-sm-4 align-items-center">
             <div class="text-center">
@@ -16,8 +17,8 @@
                 <label class="custom-control-label" for="customControlInline">Detected language: <b>English</b></label>
             </div>
 
-            <button type="submit" class="btn btn-info my-1">Predicted score: None</button>
-            <button type="submit" class="btn btn-primary my-1">Submit</button>
+            <button type="submit" class="btn btn-info my-1" disabled>Predicted score: None</button>
+            <button type="submit" class="btn btn-success my-1">Predict</button>
         </div>
     </form>
 {% endblock %}
