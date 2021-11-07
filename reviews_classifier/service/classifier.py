@@ -1,12 +1,9 @@
 from time import time
 
-from reviews_classifier.service import bert_model, bert_tokenizer, \
-    classifier_model
-from reviews_classifier.service.bert import vectorize
-from reviews_classifier.service.text_filtering import preprocess
 import numpy as np
-import logging
+
 from flask import current_app as app
+from reviews_classifier.service import classifier_model
 
 
 def generator(data_set,
@@ -68,26 +65,13 @@ def generator(data_set,
             yield [x, x], y
 
 
-def predict(text) -> float:
+def predict(vector) -> float:
     """
     generate predicted score
 
     :param text: text from user
     :return: predicted score
     """
-    score = 'Error'
-    app.logger.info('Start text preprocessing')
-    start_time = time()
-    text = preprocess(text)
-    app.logger.info(f'Text preprocessed, spend time: {time() - start_time}')
-
-    start_time = time()
-    app.logger.info('Start vectorizing text with BERT')
-    vector = vectorize(text,
-                       bert_model=bert_model,
-                       bert_tokenizer=bert_tokenizer)
-    app.logger.info(f'Text vectorized, spend time: {time() - start_time}')
-
     g = generator([vector], predict_mode=True)
 
     start_time = time()
