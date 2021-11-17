@@ -22,9 +22,15 @@ class Predict(Resource):
         return 'test_detect_lang', 200
 
     def post(self):
-        response = request.get_json()
+        if request.form:
+            response = request.form
+        else:
+            response = request.get_json()
         if not response:
             return {'message': "Request empty"}, 200
-
-        score = predict(response['text'])
-        return {'Score': score}, 200
+        try:
+            score, language = predict(response['review_text'])
+            result = {'score': score, 'language': language}
+        except:
+            result = {'score': 'Error', 'language': 'Error'}
+        return result, 200

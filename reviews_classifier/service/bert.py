@@ -1,4 +1,5 @@
 import torch
+from reviews_classifier.service import device
 
 
 def vectorize(text,
@@ -31,8 +32,8 @@ def vectorize(text,
         segments_ids = [1] * len(tokenized_text)
 
     # Convert inputs to PyTorch tensors
-    tokens_tensor = torch.tensor([indexed_tokens])
-    segments_tensors = torch.tensor([segments_ids])
+    tokens_tensor = torch.tensor([indexed_tokens]).to(device)
+    segments_tensors = torch.tensor([segments_ids]).to(device)
     # Run the text through BERT, and collect all of the hidden states produced
     # from all 24 layers.
     with torch.no_grad():
