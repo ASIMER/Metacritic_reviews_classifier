@@ -63,6 +63,7 @@ def init_classifier():
     return model
 
 
+# initialize classifier
+classifier_model = init_classifier()
 # initialize bert model
 bert_model, bert_tokenizer, device = init_bert()
-classifier_model = init_classifier()
