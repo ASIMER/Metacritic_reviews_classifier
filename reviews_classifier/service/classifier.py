@@ -25,7 +25,8 @@ def generator(data_set,
 
     data_set      - data with features
                     Types: itterable[str] or itterable[itterable]
-                    (ONLY itterable (feature vector) if vectorizer is not defined)
+                    (ONLY itterable (feature vector)
+                    if vectorizer is not defined)
     label_set     - data with classes (itterable)
     batch_size    - size of batches
     vectorizer    - custom vectorizer (callable),
@@ -64,13 +65,12 @@ def generator(data_set,
 
         batch_number = (batch_number+1) % items_per_epoch
         x = x[:, :vec_len]
-        #x = x + 1
+        # x = x + 1
         if three_d_tensor_mode:
 
-            #x = np.expand_dims(x, -1)
+            # x = np.expand_dims(x, -1)
             x = x.reshape((x.shape[0], hidden_layers_lstm, vec_len_lstm))
-            #x = np.expand_dims(x, -1)
-
+            # x = np.expand_dims(x, -1)
 
         if simple_return:
             if predict_mode:
@@ -91,7 +91,7 @@ def predict(text) -> float:
     :param text: text from user
     :return: predicted score
     """
-    score = 'Error'
+
     app.logger.info('Start text translating')
     start_time = time()
     try:
@@ -117,6 +117,8 @@ def predict(text) -> float:
         vector = vectorize(text,
                            bert_model=bert_model,
                            bert_tokenizer=bert_tokenizer)
+        if isinstance(vector, type(None)):
+            return None, 'BERT vectirizing error'
     except:
         app.logger.error(f'BERT vectirizing error with text: {text}')
         return None, 'BERT vectirizing error'

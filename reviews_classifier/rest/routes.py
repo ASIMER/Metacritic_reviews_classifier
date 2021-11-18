@@ -29,7 +29,7 @@ class Predict(Resource):
         if not response:
             return {'message': "Request empty"}, 200
         try:
-            score, language = predict(response['review_text'])
+            score, language = predict(response['review_text'][:4000])
             result = {'score': score, 'language': language}
         except:
             result = {'score': 'Error', 'language': 'Error'}

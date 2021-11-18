@@ -6,13 +6,18 @@ from transformers import BertModel, BertTokenizer
 import logging
 from time import time
 import torch
+import google.cloud.logging # Don't conflict with standard logging
+from google.cloud.logging.handlers import CloudLoggingHandler
 
+client_logger = google.cloud.logging.Client()
+cloud_handler = CloudLoggingHandler(client_logger)
 is_gunicorn = "gunicorn" in os.environ.get("SERVER_SOFTWARE", "")
 # create logger
 logger = logging.getLogger('gunicorn.error') \
     if is_gunicorn else logging.getLogger(__name__)
 logger.setLevel(logger.level if is_gunicorn else logging.DEBUG)
 logger.addHandler(logging.StreamHandler(sys.stdout))
+logger.addHandler(cloud_handler)
 
 if not is_gunicorn:
     pass
@@ -63,7 +68,7 @@ def init_classifier():
     return model
 
 
-# initialize classifier
-classifier_model = init_classifier()
 # initialize bert model
 bert_model, bert_tokenizer, device = init_bert()
+# initialize classifier
+classifier_model = init_classifier()

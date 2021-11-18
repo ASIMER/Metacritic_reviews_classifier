@@ -21,6 +21,7 @@ def vectorize(text,
 
     # Split the sentence into tokens.
     tokenized_text = bert_tokenizer.tokenize(marked_text)
+    tokenized_text = tokenized_text[:511] + ['[SEP]']
     # Map the token strings to their vocabulary indeces.
     indexed_tokens = bert_tokenizer.convert_tokens_to_ids(tokenized_text)
 
