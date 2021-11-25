@@ -2,22 +2,22 @@ import os
 import sys
 
 from tensorflow import keras
-from transformers import BertModel, BertTokenizer
+from transformers import AutoTokenizer, AutoModel
 import logging
 from time import time
 import torch
 import google.cloud.logging # Don't conflict with standard logging
 from google.cloud.logging.handlers import CloudLoggingHandler
 
-client_logger = google.cloud.logging.Client()
-cloud_handler = CloudLoggingHandler(client_logger)
+#client_logger = google.cloud.logging.Client()
+#cloud_handler = CloudLoggingHandler(client_logger)
 is_gunicorn = "gunicorn" in os.environ.get("SERVER_SOFTWARE", "")
 # create logger
 logger = logging.getLogger('gunicorn.error') \
     if is_gunicorn else logging.getLogger(__name__)
 logger.setLevel(logger.level if is_gunicorn else logging.DEBUG)
 logger.addHandler(logging.StreamHandler(sys.stdout))
-logger.addHandler(cloud_handler)
+#logger.addHandler(cloud_handler)
 
 if not is_gunicorn:
     pass
@@ -28,10 +28,10 @@ def init_bert():
     start_init_time = time()
     logger.info('Start bert initializing')
     # Load pre-trained model tokenizer (vocabulary)
-    tokenizer = BertTokenizer.from_pretrained('bert-large-uncased')
+    tokenizer = AutoTokenizer.from_pretrained('microsoft/deberta-v3-large')
     # Load pre-trained model (weights)
     # Whether the model returns all hidden-states.
-    model = BertModel.from_pretrained('bert-large-uncased',
+    model = AutoModel.from_pretrained('microsoft/deberta-v3-large',
                                       output_hidden_states=True,
                                       )
     # move to GPU if available

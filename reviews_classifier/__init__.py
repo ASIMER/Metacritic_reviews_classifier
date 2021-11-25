@@ -19,8 +19,8 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config())
     #app.wsgi_app = Middleware(app.wsgi_app)
-    client_logger = google.cloud.logging.Client()
-    cloud_handler = CloudLoggingHandler(client_logger)
+    #client_logger = google.cloud.logging.Client()
+    #cloud_handler = CloudLoggingHandler(client_logger)
     is_gunicorn = "gunicorn" in os.environ.get("SERVER_SOFTWARE", "")
     if is_gunicorn:
         gunicorn_logger = logging.getLogger('gunicorn.error')
@@ -30,7 +30,7 @@ def create_app():
     else:
         app.logger.info('App started without gunicorn')
     app.logger.setLevel(logging.INFO)
-    app.logger.addHandler(cloud_handler)
+    #app.logger.addHandler(cloud_handler)
     api = Api(app)
     app.register_blueprint(classifier,
                            static_folder='static',

@@ -14,19 +14,17 @@ def generator(data_set,
               labels_set=None,
               batch_size=128,
               vectorizer=None,
-              three_d_tensor_mode=False,
+              three_d_tensor_mode=True,
               predict_mode=False,
               simple_return=False,
-              vec_len=4096,
-              hidden_layers_lstm=4,
+              hidden_layers_lstm=8,
               vec_len_lstm=1024):
     """
     Generate data batches
 
     data_set      - data with features
                     Types: itterable[str] or itterable[itterable]
-                    (ONLY itterable (feature vector)
-                    if vectorizer is not defined)
+                    (ONLY itterable (feature vector) if vectorizer is not defined)
     label_set     - data with classes (itterable)
     batch_size    - size of batches
     vectorizer    - custom vectorizer (callable),
@@ -56,21 +54,27 @@ def generator(data_set,
             # save part of data
             x = np.asarray(data_set[initial:final]).astype(np.float32)
             if not predict_mode:
-                y = np.asarray(labels_set[initial:final]).astype(np.float32)
+                y = np.asarray(labels_set[initial:final]).astype(np.int)
         else:
-            # save part of data
-            x = data_set[initial:final]
-            if not predict_mode:
-                y = labels_set[initial:final].astype(np.float32)
+            if batch_size > data_set.shape[0]:
+                x = data_set.astype(np.float32)
+                if not predict_mode:
+                    y = labels_set.astype(np.int)
+            else:
+                # save part of data
+                x = data_set[initial:final]
+                if not predict_mode:
+                    y = labels_set[initial:final].astype(np.int)
 
         batch_number = (batch_number+1) % items_per_epoch
-        x = x[:, :vec_len]
-        # x = x + 1
+        #x = x[:, :vec_len]
+        #x = x + 1
         if three_d_tensor_mode:
 
-            # x = np.expand_dims(x, -1)
+            #x = np.expand_dims(x, -1)
             x = x.reshape((x.shape[0], hidden_layers_lstm, vec_len_lstm))
-            # x = np.expand_dims(x, -1)
+            #x = np.expand_dims(x, -1)
+
 
         if simple_return:
             if predict_mode:
@@ -91,7 +95,6 @@ def predict(text) -> float:
     :param text: text from user
     :return: predicted score
     """
-
     app.logger.info('Start text translating')
     start_time = time()
     try:
@@ -115,8 +118,8 @@ def predict(text) -> float:
     app.logger.info('Start vectorizing text with BERT')
     try:
         vector = vectorize(text,
-                           bert_model=bert_model,
-                           bert_tokenizer=bert_tokenizer)
+                           model=bert_model,
+                           tokenizer=bert_tokenizer)
         if isinstance(vector, type(None)):
             return None, 'BERT vectirizing error'
     except:
@@ -133,8 +136,9 @@ def predict(text) -> float:
     except:
         app.logger.error(f'Classification error with text: {text}')
         return None, 'Classification error'
+
     # convert np.array to score
-    score = round(float(score[0][0]), 3)
+    score = round(float(np.mean(score)), 3)
     # cut border values
     score = 10 if score > 10 else score
     score = 0 if score < 0 else score

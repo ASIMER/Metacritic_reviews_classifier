@@ -17,7 +17,7 @@ $(document).ready(function () {
             type: "POST",
             success: function (response) {
                 console.log(response)
-                $('#score').html('Predicted score:' + response['score'])
+                $('#score').html('Predicted score: ' + response['score'])
                 $('#detected_language').html('Detected language: <b>' + response['language'] + '</b>')
 
                 $('#detected_language').attr("hidden", false);

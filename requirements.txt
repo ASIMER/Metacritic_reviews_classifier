@@ -58,6 +58,7 @@ termcolor==1.1.0
 tokenizers==0.10.3
 toml==0.10.2
 google-cloud-translate==2.0.1
+google-cloud-logging
 torch @ https://download.pytorch.org/whl/cpu/torch-1.10.0%2Bcpu-cp39-cp39-linux_x86_64.whl
 torchaudio @ https://download.pytorch.org/whl/cpu/torchaudio-0.10.0%2Bcpu-cp39-cp39-linux_x86_64.whl
 torchvision @ https://download.pytorch.org/whl/cpu/torchvision-0.11.1%2Bcpu-cp39-cp39-linux_x86_64.whl
