@@ -28,6 +28,7 @@ class Predict(Resource):
             response = request.get_json()
         if not response:
             return {'message': "Request empty"}, 200
+            
         try:
             score, language = predict(response['review_text'][:4000])
             result = {'score': score, 'language': language}

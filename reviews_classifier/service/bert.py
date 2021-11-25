@@ -40,10 +40,10 @@ def vectorize(text,
     # Convert inputs to PyTorch tensors
     tokens_tensor = torch.tensor([indexed_tokens],
                                  dtype=torch.int,
-                                 device=torch.device('cuda'))
+                                 device=torch.device(device))
     segments_tensors = torch.tensor([segments_ids],
                                     dtype=torch.int,
-                                    device=torch.device('cuda'))
+                                    device=torch.device(device))
     # Run the text through BERT, and collect all of the hidden states produced
     # from all 24 layers.
     with torch.no_grad():
