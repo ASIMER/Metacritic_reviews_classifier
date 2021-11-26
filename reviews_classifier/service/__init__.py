@@ -28,10 +28,10 @@ def init_bert():
     start_init_time = time()
     logger.info('Start bert initializing')
     # Load pre-trained model tokenizer (vocabulary)
-    tokenizer = AutoTokenizer.from_pretrained('microsoft/deberta-v3-large')
+    tokenizer = AutoTokenizer.from_pretrained('albert-large-v2')
     # Load pre-trained model (weights)
     # Whether the model returns all hidden-states.
-    model = AutoModel.from_pretrained('microsoft/deberta-v3-large',
+    model = AutoModel.from_pretrained('albert-large-v2',
                                       output_hidden_states=True,
                                       )
     # move to GPU if available

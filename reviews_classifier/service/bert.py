@@ -51,7 +51,7 @@ def vectorize(text,
             outputs = model(tokens_tensor, segments_tensors)
         except:
             return None
-        hidden_states = outputs[1]
+        hidden_states = outputs[2]
 
         token_vecs_cat = torch.stack(hidden_states[:-1 - bert_layers:-1],
                                      dim=1)[0]
