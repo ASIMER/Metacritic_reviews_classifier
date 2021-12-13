@@ -4,9 +4,9 @@ import numpy as np
 
 def vectorize(text,
               model, tokenizer,
-              split_mode=True, bert_layers=8):
+              split_mode=True, bert_layers=2):
     """
-    Vectorize text
+    Vectorize text with BERT
     text - input text
     split_mode - use [SEP] token or not
     bert_layers - how much last layers concatenate
@@ -28,11 +28,8 @@ def vectorize(text,
     indexed_tokens = tokenizer.convert_tokens_to_ids(tokenized_text)
 
     if split_mode:
-        segments_ids = [
-                1 if word != '[SEP]' and word != '[PAD]'
-                else 0
-                for word in tokenized_text[:-1]
-                ]
+        segments_ids = [1 if word != '[SEP]' and word != '[PAD]'
+                        else 0 for word in tokenized_text[:-1]]
         segments_ids += [1]
     else:
         segments_ids = [1] * len(tokenized_text)
@@ -56,8 +53,8 @@ def vectorize(text,
         token_vecs_cat = torch.stack(hidden_states[:-1 - bert_layers:-1],
                                      dim=1)[0]
         token_vecs_cat = torch.mean(token_vecs_cat, dim=1)
-        token_vecs_cat = torch.reshape(token_vecs_cat, (bert_layers * 1024,))
+        token_vecs_cat = torch.reshape(token_vecs_cat, (bert_layers * 768,))
         token_vecs_cat = token_vecs_cat.cpu().detach()\
-                         .numpy().astype(np.float32)
-
+                                       .numpy().astype(np.float32)
+        #pbar.update(1)
         return token_vecs_cat
